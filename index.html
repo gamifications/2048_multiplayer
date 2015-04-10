@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <link href="main.css" rel="stylesheet" type="text/css">
+<body>
+<!-- Multiplayer box -->
+<div>
+  <a href="#" class="find-match">Find Random Opponent</a> or  Give this link to the other player:
+  <div class="room-link"><input class="room-input" type="text" val="" /></div>
+</div><hr>
+<!--/ Multiplayer box -->
+<div class="container">
+    <div class="heading">
+      <div class="scores-container">
+        <div class="blue-score-container score-container">0</div>
+        <div class="red-score-container score-container">0</div>
+      </div>
+    </div>
+
+    <div class="current-player">Waiting for other player...</div>
+
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Keep going</a>
+          <a class="retry-button">Try again</a>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:20px">
+    <p class="game-explanation">
+      <strong class="important">How to play:</strong> Take turns using your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong> Merge your opponent's tiles to add to your score. The player who creates the 2048 tile wins, or, if no moves are possible, the player with the highest sum of all tiles wins!
+    </p>
+    <hr>
+    <p>
+    <strong class="important">Note:</strong> This site is not the official version of 2048. This site is a derivative, and should be used with caution. All other sites are derivatives of this derivative, and should be used with extreme caution.
+    </p>
+    <hr>
+    <p>
+    Created by Chris Chen of <a href="https://instapainting.com" target="_blank">Instapainting.com</a>. Based on 2048 by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli</a>.
+    </p>
+  </div>
+
+  <script src="js/animframe_polyfill.js"></script>
+  <script src="js/keyboard_input_manager.js"></script>
+  <script src="js/html_actuator.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/tile.js"></script>
+  <script src="js/local_score_manager.js"></script>
+  <script src="js/peer.js"></script>
+  <script src="js/game_manager.js"></script>
+  <script src="js/application.js"></script>
+</body>
+</html>
