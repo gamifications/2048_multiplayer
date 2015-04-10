@@ -151,7 +151,7 @@ window.requestAnimationFrame(function () {
     // Host
     peer.on('open', function(id){
       window.connectionId = id;
-      document.querySelector(".room-input").value = 'http://instapainting.com/2x2048/index.html#' + id;
+      document.querySelector(".room-input").value = 'http://gamifications.github.io/2048_multiplayer/index.html#' + id;
     });
 
     peer.on('connection', function(conn) {
