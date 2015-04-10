@@ -16,7 +16,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
     self.clearContainer(self.tileContainer);
 
     if (self.roomInput)
-      self.roomInput.value = 'http://instapainting.com/2x2048/index.html#' + metadata.roomID;
+      self.roomInput.value = 'http://gamifications.github.io/2048_multiplayer/index.html#' + metadata.roomID;
     self.currentPlayer.textContent = metadata.currentPlayer ? 'Red\'s turn' : 'Blue\'s turn';
 
     grid.cells.forEach(function (column) {
