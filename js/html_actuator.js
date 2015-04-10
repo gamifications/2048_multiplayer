@@ -1,12 +1,10 @@
 function HTMLActuator() {
   this.tileContainer    = document.querySelector(".tile-container");
-  this.scoreContainers  = [document.querySelector(".blue-score-container"), document.querySelector(".red-score-container")];
+  this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
-  this.roomInput        = document.querySelector(".room-input");
-  this.currentPlayer    = document.querySelector(".current-player");
 
-  this.scores = {};
+  this.score = 0;
 }
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
@@ -14,10 +12,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
   window.requestAnimationFrame(function () {
     self.clearContainer(self.tileContainer);
-
-    if (self.roomInput)
-      self.roomInput.value = 'http://gamifications.github.io/2048_multiplayer/index.html#' + metadata.roomID;
-    self.currentPlayer.textContent = metadata.currentPlayer ? 'Red\'s turn' : 'Blue\'s turn';
 
     grid.cells.forEach(function (column) {
       column.forEach(function (cell) {
@@ -27,21 +21,22 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
-    self.updateScores(metadata.scores);
-    // self.updateBestScore(metadata.bestScore);
+    self.updateScore(metadata.score);
+    self.updateBestScore(metadata.bestScore);
 
     if (metadata.terminated) {
       if (metadata.over) {
-        self.message(false, metadata.winners); // You lose
+        self.message(false); // You lose
       } else if (metadata.won) {
-        self.message(true, metadata.winners); // You win!
+        self.message(true); // You win!
       }
     }
+
   });
 };
 
 // Continues the game (both restart and keep playing)
-HTMLActuator.prototype.continue = function () {
+HTMLActuator.prototype.continueGame = function () {
   this.clearMessage();
 };
 
@@ -91,11 +86,6 @@ HTMLActuator.prototype.addTile = function (tile) {
   // Add the inner part of the tile to the wrapper
   wrapper.appendChild(inner);
 
-  if (tile.player === 0)
-    inner.style.background = '#b8d6f0'; // Blue
-  else
-    inner.style.background = '#e8a8a8'; // Red
-
   // Put the tile on the board
   this.tileContainer.appendChild(wrapper);
 };
@@ -113,24 +103,20 @@ HTMLActuator.prototype.positionClass = function (position) {
   return "tile-position-" + position.x + "-" + position.y;
 };
 
-HTMLActuator.prototype.updateScores = function (scores) {
+HTMLActuator.prototype.updateScore = function (score) {
+  this.clearContainer(this.scoreContainer);
 
-  var score;
-  for (var x = 0; x < scores.length; x++) {
-    this.clearContainer(this.scoreContainers[x]);
-    score = scores[x];
-    var difference = score - this.scores[x];
-    this.scores[x] = score;
+  var difference = score - this.score;
+  this.score = score;
 
-    this.scoreContainers[x].textContent = this.scores[x];
+  this.scoreContainer.textContent = this.score;
 
-    if (difference > 0) {
-      var addition = document.createElement("div");
-      addition.classList.add("score-addition");
-      addition.textContent = "+" + difference;
+  if (difference > 0) {
+    var addition = document.createElement("div");
+    addition.classList.add("score-addition");
+    addition.textContent = "+" + difference;
 
-      this.scoreContainers[x].appendChild(addition);
-    }
+    this.scoreContainer.appendChild(addition);
   }
 };
 
@@ -138,13 +124,9 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
   this.bestContainer.textContent = bestScore;
 };
 
-HTMLActuator.prototype.message = function (won, winners) {
+HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message;
-  if (winners.length === 2)
-    message = 'It\'s a tie!';
-  else
-    message = (winners[0] ? 'Red' : 'Blue') + " wins!";
+  var message = won ? "You win!" : "Game over!";
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
